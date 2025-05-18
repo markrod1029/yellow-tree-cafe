@@ -67,8 +67,17 @@ function getOverstockedItems($conn, $threshold = 100) {
     return $items;
 }
 
-$overstocked_items = getOverstockedItems($conn); // Default threshold is 100
-
+$overstocked_items = getOverstockedItems($conn);
+function getOutOfStockItems($conn) {
+    $query = "SELECT product_name FROM inventory WHERE quantity = 0";
+    $result = mysqli_query($conn, $query);
+    $items = [];
+    while ($row = mysqli_fetch_assoc($result)) {
+        $items[] = $row;
+    }
+    return $items;
+}
+$out_of_stock_items = getOutOfStockItems($conn);
 
 ?>
 
@@ -140,6 +149,33 @@ $overstocked_items = getOverstockedItems($conn); // Default threshold is 100
         </div>
     </div>
 <?php endif; ?>
+
+
+          <?php if (count($out_of_stock_items) > 0): ?>
+            <div class="col-xl-12 col-md-12 mb-4">
+              <div class="card border-left-dark shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-start">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-dark text-uppercase mb-2">
+                        Out of Stock Items
+                      </div>
+                      <ul class="mb-0 text-gray-800">
+                        <?php foreach ($out_of_stock_items as $item): ?>
+                          <li><?= htmlspecialchars($item['product_name']) ?></li>
+                        <?php endforeach; ?>
+                      </ul>
+                    </div>
+                    <div class="col-auto">
+                      <a href="index.php?page=inventory">
+                        <i class="fas fa-ban fa-2x text-gray-300"></i>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <?php endif; ?>
 
     <!-- Content Row -->
     <div class="row">
