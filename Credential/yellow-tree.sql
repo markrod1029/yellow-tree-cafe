@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 30, 2025 at 11:20 AM
+-- Generation Time: May 18, 2025 at 07:27 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -46,6 +46,7 @@ CREATE TABLE `inventory` (
   `product_name` varchar(255) NOT NULL,
   `quantity` int(10) DEFAULT 0,
   `buy_price` varchar(10) DEFAULT NULL,
+  `expDate` date NOT NULL,
   `updated_at` date NOT NULL,
   `created_at` date NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
@@ -160,7 +161,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `fname`, `mname`, `lname`, `email`, `contact`, `password`, `address`, `role`, `photo`, `created_at`, `updated_at`) VALUES
-(1, 'Adminstrator', '', 'Admin', 'admin@gmail.com', '097877656452', '$2y$10$3ItWMCrcZktwJ1zUXAFmwutSiUa8X9i7zmM6do4YEqagDFEUOMxRq', 'Quis consequatur La', 'admin', '1743317842_websites_3d.png', '2025-03-30 06:57:22', '2025-03-27');
+(1, 'Adminstrator', '', 'Admin', 'admin@gmail.com', '097877656452', '$2y$10$3ItWMCrcZktwJ1zUXAFmwutSiUa8X9i7zmM6do4YEqagDFEUOMxRq', 'Quis consequatur La', 'admin', '1743317842_websites_3d.png', '2025-03-30 06:57:22', '2025-03-27'),
+(24, 'Bertha', 'Hadley Hicks', 'Strong', 'jotymikeqa@mailinator.com', '460', '$2y$10$VcKkjxiBgz3qQ9wEGf.LY.UUmagW8q3aFBRrcFRi1ZIbes.3CI4ye', 'Aliqua Qui quis non', 'staff', NULL, '2025-04-07 12:12:22', '2025-04-07');
 
 --
 -- Indexes for dumped tables
@@ -232,7 +234,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `inventory`
 --
 ALTER TABLE `inventory`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `products`
@@ -262,13 +264,13 @@ ALTER TABLE `sales_products`
 -- AUTO_INCREMENT for table `suppliers`
 --
 ALTER TABLE `suppliers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- Constraints for dumped tables

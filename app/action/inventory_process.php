@@ -34,20 +34,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $supplier_id = isset($_POST['supplier_id']) ? intval($_POST['supplier_id']) : 0;
         $quantity = isset($_POST['quantity']) ? intval($_POST['quantity']) : 0;
         $buy_price = isset($_POST['buy_price']) ? floatval($_POST['buy_price']) : 0.00;
+        $expDate = $_POST['expDate'];
 
         // Validation
-        if (empty($product_name) || $supplier_id <= 0  || $buy_price <= 0) {
+        if (empty($product_name) || $supplier_id <= 0  || $buy_price <= 0 || $quantity <= 0 || empty($expDate)) {
             echo "<script>alert('All fields are required and must be valid.'); window.location.href = '../../admin/index.php?page=inventory_form';</script>";
             exit();
         }
 
         if ($inventory_id) {
             // Update existing inventory
-            $query = "UPDATE inventory SET product_name = ?, supplier_id = ?, quantity = ?, buy_price = ?, updated_at = NOW() WHERE id = ?";
+            $query = "UPDATE inventory SET product_name = ?, supplier_id = ?, quantity = ?, buy_price = ?, expDate = ?, updated_at = NOW() WHERE id = ?";
             $stmt = mysqli_prepare($conn, $query);
 
             if ($stmt) {
-                mysqli_stmt_bind_param($stmt, "siidi", $product_name, $supplier_id, $quantity, $buy_price, $inventory_id);
+                mysqli_stmt_bind_param($stmt, "siidsi", $product_name, $supplier_id, $quantity, $buy_price, $expDate, $inventory_id);
                 mysqli_stmt_execute($stmt);
                 mysqli_stmt_close($stmt);
                 $message = "Inventory updated successfully!";
@@ -56,12 +57,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         } else {
             // Insert new inventory
-            $query = "INSERT INTO inventory (product_name, supplier_id, quantity, buy_price, created_at, updated_at) 
-                      VALUES (?, ?, ?, ?, NOW(), NOW())";
+            $query = "INSERT INTO inventory (product_name, supplier_id, quantity, buy_price, expDate, created_at, updated_at) 
+                      VALUES (?, ?, ?, ?, ?, NOW(), NOW())";
             $stmt = mysqli_prepare($conn, $query);
 
             if ($stmt) {
-                mysqli_stmt_bind_param($stmt, "siid", $product_name, $supplier_id, $quantity, $buy_price);
+                mysqli_stmt_bind_param($stmt, "siids", $product_name, $supplier_id, $quantity, $buy_price, $expDate );
                 mysqli_stmt_execute($stmt);
                 mysqli_stmt_close($stmt);
                 $message = "Inventory added successfully!";
@@ -77,6 +78,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 // If no valid action was provided
-echo "<script>alert('Invalid action.'); window.location.href = '../../admin/index.php?page=inventory';</script>";
+// echo "<script>alert('Invalid action.'); window.location.href = '../../admin/index.php?page=inventory';</script>";
 exit();
 ?>

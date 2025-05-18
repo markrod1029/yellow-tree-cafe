@@ -95,6 +95,21 @@ if ($inventory_id > 0) {
             </div>
           </div>
 
+
+           <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="expDate">Expiration Date * :</label>
+                <input type="date" class="form-control" id="expDate" name="expDate" 
+                  value="<?= $inventory ? htmlspecialchars($inventory['expDate']) : '' ?>" 
+                  placeholder="Enter Expiration Date" required>
+              </div>
+            </div>
+
+           
+          </div>
+          
+
           <div class="form-group text-center">
             <button type="submit" class="btn btn-success btn-lg px-4" name="submit">
               <?= $inventory ? 'Update Inventory' : 'Add Inventory' ?>
