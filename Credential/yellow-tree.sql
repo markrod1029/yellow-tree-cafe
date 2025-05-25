@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 18, 2025 at 07:27 AM
+-- Generation Time: May 25, 2025 at 09:13 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -51,6 +51,14 @@ CREATE TABLE `inventory` (
   `created_at` date NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
+--
+-- Dumping data for table `inventory`
+--
+
+INSERT INTO `inventory` (`id`, `supplier_id`, `product_name`, `quantity`, `buy_price`, `expDate`, `updated_at`, `created_at`) VALUES
+(11, 8, 'Regina Fry', 1000, '741', '2025-05-18', '2025-05-18', '2025-05-18'),
+(12, 8, 'Rhiannon Padilla', 0, '216', '1979-04-29', '2025-05-18', '2025-05-18');
+
 -- --------------------------------------------------------
 
 --
@@ -60,6 +68,7 @@ CREATE TABLE `inventory` (
 CREATE TABLE `products` (
   `id` int(11) NOT NULL,
   `category_id` int(10) NOT NULL,
+  `product_name` varchar(50) NOT NULL,
   `brand_name` varchar(255) DEFAULT NULL,
   `quantity` int(10) DEFAULT 0,
   `sell_price` varchar(10) DEFAULT NULL,
@@ -134,6 +143,13 @@ CREATE TABLE `suppliers` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `suppliers`
+--
+
+INSERT INTO `suppliers` (`id`, `fname`, `mname`, `lname`, `company`, `contact`, `email`, `address`, `created_at`, `updated_at`) VALUES
+(8, 'Noel', 'Reuben Nunez', 'Cooper', 'Flores and Wilkerson Associate', '155', 'kukuryp@mailinator.com', 'Molestias nihil veli', '2025-05-18 10:42:41', '2025-05-18 10:42:41');
 
 -- --------------------------------------------------------
 
@@ -228,13 +244,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `inventory`
 --
 ALTER TABLE `inventory`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `products`
@@ -264,7 +280,7 @@ ALTER TABLE `sales_products`
 -- AUTO_INCREMENT for table `suppliers`
 --
 ALTER TABLE `suppliers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `users`

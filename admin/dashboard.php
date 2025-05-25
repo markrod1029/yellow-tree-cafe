@@ -40,45 +40,6 @@ $selected_month = $_GET['month'] ?? date('m');
 $total_products = total_count($conn, 'products');
 $total_sales = getTotalSales($conn, $selected_year, $selected_month);
 $earnings_today = getEarningsToday($conn);
-
-function getExpiringInventoryItems($conn)
-{
-    $query = "SELECT product_name, expDate FROM inventory 
-              WHERE expDate BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 5 DAY)
-              ORDER BY expDate ASC";
-    $result = mysqli_query($conn, $query);
-    $items = [];
-    while ($row = mysqli_fetch_assoc($result)) {
-        $items[] = $row;
-    }
-    return $items;
-}
-
-$expiring_items = getExpiringInventoryItems($conn);
-
-
-function getOverstockedItems($conn, $threshold = 100) {
-    $query = "SELECT product_name, quantity FROM inventory WHERE quantity > $threshold";
-    $result = mysqli_query($conn, $query);
-    $items = [];
-    while ($row = mysqli_fetch_assoc($result)) {
-        $items[] = $row;
-    }
-    return $items;
-}
-
-$overstocked_items = getOverstockedItems($conn);
-function getOutOfStockItems($conn) {
-    $query = "SELECT product_name FROM inventory WHERE quantity = 0";
-    $result = mysqli_query($conn, $query);
-    $items = [];
-    while ($row = mysqli_fetch_assoc($result)) {
-        $items[] = $row;
-    }
-    return $items;
-}
-$out_of_stock_items = getOutOfStockItems($conn);
-
 ?>
 
 <!-- Begin Page Content -->
@@ -86,96 +47,8 @@ $out_of_stock_items = getOutOfStockItems($conn);
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-
+       
     </div>
-
-    <?php if (count($expiring_items) > 0): ?>
-        <div class="col-xl-12 col-md-12 mb-4">
-            <div class="card border-left-danger shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-start">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-2">
-                                Inventory Items Expiring Soon (within 5 days)
-                            </div>
-                            <ul class="mb-0 text-gray-800">
-                                <?php foreach ($expiring_items as $item): ?>
-                                    <li>
-                                        <?= htmlspecialchars($item['product_name']) ?>
-                                        <small class="text-muted">(expires on <?= date('F j, Y', strtotime($item['expDate'])) ?>)</small>
-                                    </li>
-                                <?php endforeach; ?>
-                            </ul>
-                        </div>
-                        <div class="col-auto">
-                            <a href="index.php?page=inventory">
-                                <i class="fas fa-exclamation-triangle fa-2x text-gray-300"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    <?php endif; ?>
-
-
-
-
-    <?php if (count($overstocked_items) > 0): ?>
-    <div class="col-xl-12 col-md-12 mb-4">
-        <div class="card border-left-warning shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-start">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-2">
-                            Overstocked Inventory Items
-                        </div>
-                        <ul class="mb-0 text-gray-800">
-                            <?php foreach ($overstocked_items as $item): ?>
-                                <li>
-                                    <?= htmlspecialchars($item['product_name']) ?> 
-                                    <small class="text-muted">(<?= $item['quantity'] ?> in stock)</small>
-                                </li>
-                            <?php endforeach; ?>
-                        </ul>
-                    </div>
-                    <div class="col-auto">
-                        <a href="index.php?page=inventory">
-                            <i class="fas fa-boxes fa-2x text-gray-300"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-<?php endif; ?>
-
-
-          <?php if (count($out_of_stock_items) > 0): ?>
-            <div class="col-xl-12 col-md-12 mb-4">
-              <div class="card border-left-dark shadow h-100 py-2">
-                <div class="card-body">
-                  <div class="row no-gutters align-items-start">
-                    <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-dark text-uppercase mb-2">
-                        Out of Stock Items
-                      </div>
-                      <ul class="mb-0 text-gray-800">
-                        <?php foreach ($out_of_stock_items as $item): ?>
-                          <li><?= htmlspecialchars($item['product_name']) ?></li>
-                        <?php endforeach; ?>
-                      </ul>
-                    </div>
-                    <div class="col-auto">
-                      <a href="index.php?page=inventory">
-                        <i class="fas fa-ban fa-2x text-gray-300"></i>
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          <?php endif; ?>
 
     <!-- Content Row -->
     <div class="row">

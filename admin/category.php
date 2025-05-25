@@ -38,7 +38,7 @@ mysqli_free_result($result);
                                         <td>
                                             <div class="btn-group">
                                                 <a href="index.php?page=category_form&&edit_id=<?= $category['id'] ?>" class="btn btn-secondary btn-sm rounded-0"><i class="fas fa-edit"></i></a>
-                                                <form action="../../app/action/category_process.php" method="POST" style="display:inline;">
+                                                <form action="../app/action/category_process.php" method="POST" style="display:inline;">
                                                     <input type="hidden" name="action" value="delete">
                                                     <input type="hidden" name="id" value="<?= htmlspecialchars($category['id']) ?>">
                                                     <button type="submit" class="btn btn-danger btn-sm rounded-0 ml-2" onclick="return confirm('Are you sure you want to delete this Category?')">
